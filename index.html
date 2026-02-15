@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul for the New Machines - Book Cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /*
+   * EMBEDDING GUIDE:
+   * The cover fills whatever container you put it in.
+   * Just set width on the parent â€” aspect ratio is locked at 10:16.
+   *
+   *   <div style="width: 400px;"><iframe src="cover.html" ...></div>  â€” small
+   *   <div style="width: 800px;"><iframe src="cover.html" ...></div>  â€” half
+   *   <div style="width: 100%;"><iframe src="cover.html" ...></div>   â€” full
+   *
+   * Or inline without iframe â€” wrap .cover-wrapper in a sized parent.
+   */
+
+  .cover-wrapper {
+    width: 100%;
+    aspect-ratio: 10 / 16;
+    max-width: 1600px;
+    position: relative;
+    overflow: hidden;
+    background: #080810;
+    box-shadow: 0 2.5cqw 7.5cqw rgba(0,0,0,0.8);
+    container-type: size;
+    container-name: cover;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 120% 40% at 50% 88%, rgba(180, 60, 20, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 30% at 50% 92%, rgba(220, 120, 30, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 10%, rgba(20, 25, 50, 0.9) 0%, transparent 70%),
+      linear-gradient(180deg, #06080f 0%, #0a0e1a 15%, #0d1020 30%, #10131f 50%, #15120f 65%, #1a1410 75%, #201510 82%, #2a1a10 90%, #1a1008 100%);
+  }
+
+  .noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  canvas#logs {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+  }
+
+  canvas#particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+  }
+
+  .vesica {
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 43.75cqw;
+    height: 43.75cqw;
+    opacity: 0.06;
+    z-index: 2;
+  }
+
+  .vesica-circle {
+    position: absolute;
+    width: 31.25cqw;
+    height: 31.25cqw;
+    border-radius: 50%;
+    border: 0.1cqw solid rgba(220, 180, 120, 0.5);
+  }
+
+  .vesica-left { left: 0; top: 50%; transform: translateY(-50%); }
+  .vesica-right { right: 0; top: 50%; transform: translateY(-50%); }
+
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .title-block {
+    position: absolute;
+    top: 10.9cqh;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 6.25cqw;
+  }
+
+  .title-soul {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 9.25cqw;
+    color: rgba(255, 220, 170, 0.92);
+    letter-spacing: 0.375cqw;
+    line-height: 1;
+    text-align: center;
+    text-shadow: 0 0 5cqw rgba(255, 160, 60, 0.15), 0 0 10cqw rgba(255, 140, 40, 0.06);
+  }
+
+  .title-for-the {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 3.25cqw;
+    letter-spacing: 1.125cqw;
+    text-transform: uppercase;
+    color: rgba(230, 215, 190, 0.82);
+    margin: 1.17cqh 0;
+    text-align: center;
+  }
+
+  .title-new, .title-machines {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 10.5cqw;
+    color: rgba(240, 200, 140, 0.88);
+    letter-spacing: 0.75cqw;
+    line-height: 0.9;
+    text-align: center;
+    text-shadow: 0 0 3.75cqw rgba(255, 180, 80, 0.1), 0 0 7.5cqw rgba(255, 140, 40, 0.04);
+  }
+
+  .divider {
+    width: 7.5cqw;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(235, 200, 140, 0.75), transparent);
+    margin: 2.15cqh 0;
+  }
+
+  .subtitle {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 3cqw;
+    letter-spacing: 0.19cqw;
+    color: rgba(230, 215, 190, 0.85);
+    line-height: 1.7;
+    max-width: 62.5cqw;
+    text-align: center;
+  }
+
+  .subtitle em {
+    font-style: italic;
+    color: rgba(245, 225, 185, 0.92);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.25cqw;
+    font-weight: 400;
+  }
+
+  .bottom-matter {
+    position: absolute;
+    bottom: 4.3cqh;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 12;
+  }
+
+  .author-name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 5cqw;
+    letter-spacing: 0.625cqw;
+    text-transform: uppercase;
+    color: rgba(235, 220, 190, 0.85);
+    margin-bottom: 1.76cqh;
+    text-shadow: 0 0 1.875cqw rgba(0,0,0,0.8), 0 0.125cqw 0.5cqw rgba(0,0,0,0.6);
+  }
+
+  .brand-line { display: flex; align-items: center; justify-content: center; gap: 1.25cqw; }
+  .brand-mark { width: 2.25cqw; height: 2.25cqw; position: relative; }
+  .brand-mark .bm-circle { position: absolute; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; border: 0.075cqw solid rgba(220, 180, 120, 0.4); }
+  .brand-mark .bm-left { left: 0; top: 0.375cqw; }
+  .brand-mark .bm-right { right: 0; top: 0.375cqw; }
+  .brand-name {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 1.375cqw;
+    letter-spacing: 0.75cqw;
+    text-transform: uppercase;
+    color: rgba(180, 160, 130, 0.45);
+    text-shadow: 0 0 1.25cqw rgba(0,0,0,0.7);
+  }
+
+  .edge-line-left, .edge-line-right {
+    position: absolute; top: 4.7cqh; bottom: 4.7cqh; width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(220, 180, 120, 0.08) 20%, rgba(220, 180, 120, 0.12) 50%, rgba(200, 100, 40, 0.08) 80%, transparent 100%);
+    z-index: 1;
+  }
+  .edge-line-left { left: 3.75cqw; }
+  .edge-line-right { right: 3.75cqw; }
+
+  .corner { position: absolute; width: 2.5cqw; height: 2.5cqw; z-index: 1; }
+  .corner-tl { top: 3.9cqh; left: 2.625cqw; border-top: 1px solid rgba(220, 180, 120, 0.12); border-left: 1px solid rgba(220, 180, 120, 0.12); }
+  .corner-tr { top: 3.9cqh; right: 2.625cqw; border-top: 1px solid rgba(220, 180, 120, 0.12); border-right: 1px solid rgba(220, 180, 120, 0.12); }
+  .corner-bl { bottom: 3.9cqh; left: 2.625cqw; border-bottom: 1px solid rgba(220, 180, 120, 0.12); border-left: 1px solid rgba(220, 180, 120, 0.12); }
+  .corner-br { bottom: 3.9cqh; right: 2.625cqw; border-bottom: 1px solid rgba(220, 180, 120, 0.12); border-right: 1px solid rgba(220, 180, 120, 0.12); }
+</style>
+</head>
+<body>
+
+<div class="cover-wrapper" id="cover">
+  <div class="bg-gradient"></div>
+  <div class="noise"></div>
+  
+  <canvas id="logs"></canvas>
+  <canvas id="particles"></canvas>
+
+  <div class="vesica">
+    <div class="vesica-circle vesica-left"></div>
+    <div class="vesica-circle vesica-right"></div>
+  </div>
+
+  <div class="edge-line-left"></div>
+  <div class="edge-line-right"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="content">
+    <div class="title-block">
+      <div class="title-soul">Soul</div>
+      <div class="title-for-the">for the</div>
+      <div class="title-new">New</div>
+      <div class="title-machines">Machines</div>
+      <div class="divider"></div>
+      <div class="subtitle">
+        How <em>Role Continuity</em> Preserves &amp; Extends<br>
+        Enterprise Human Intelligence
+      </div>
+    </div>
+
+    <div class="bottom-matter">
+      <div class="author-name">Chris Dollard</div>
+      <div class="author-logo" style="margin-bottom: 1.5cqh;">
+        <img src="https://images.squarespace-cdn.com/content/v1/69239007eb510014af879b35/94ce2db1-eb30-4768-86df-d0d7d90429d9/logo-web-font-rev.png" alt="ABRAXIS" style="height: 30px; opacity: 0.75;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const cover = document.getElementById('cover');
+  const logsCanvas = document.getElementById('logs');
+  const partCanvas = document.getElementById('particles');
+  const logsCtx = logsCanvas.getContext('2d');
+  const ctx = partCanvas.getContext('2d');
+  
+  function resize() {
+    const rect = cover.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    logsCanvas.width = partCanvas.width = rect.width * dpr;
+    logsCanvas.height = partCanvas.height = rect.height * dpr;
+    logsCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Use getBoundingClientRect for CSS-pixel dimensions (DPR-independent)
+  const W = () => cover.getBoundingClientRect().width;
+  const H = () => cover.getBoundingClientRect().height;
+  let time = 0;
+
+  const FIRE_Y = () => H() * 0.835;
+  const LOG_Y = () => H() * 0.855;
+
+  function gaussRandom(mean, stddev) {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    return mean + stddev * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+  }
+
+  // ========================================================
+  // LOGS
+  // ========================================================
+  function drawLog(cx, x, y, length, thickness, angle, brightness) {
+    cx.save();
+    cx.translate(x, y);
+    cx.rotate(angle);
+    
+    const hw = length / 2;
+    const hh = thickness / 2;
+    const baseR = 45 + brightness * 30;
+    const baseG = 28 + brightness * 15;
+    const baseB = 15 + brightness * 8;
+    
+    const grad = cx.createLinearGradient(-hw, -hh, -hw, hh);
+    grad.addColorStop(0, `rgba(${baseR + 15}, ${baseG + 8}, ${baseB + 4}, 0.9)`);
+    grad.addColorStop(0.3, `rgba(${baseR}, ${baseG}, ${baseB}, 0.95)`);
+    grad.addColorStop(0.7, `rgba(${baseR - 10}, ${baseG - 5}, ${baseB - 3}, 0.95)`);
+    grad.addColorStop(1, `rgba(${baseR - 15}, ${baseG - 8}, ${baseB - 5}, 0.85)`);
+    
+    const radius = hh;
+    cx.beginPath();
+    cx.moveTo(-hw + radius, -hh);
+    cx.lineTo(hw - radius, -hh);
+    cx.arc(hw - radius, 0, hh, -Math.PI/2, Math.PI/2);
+    cx.lineTo(-hw + radius, hh);
+    cx.arc(-hw + radius, 0, hh, Math.PI/2, -Math.PI/2);
+    cx.closePath();
+    cx.fillStyle = grad;
+    cx.fill();
+    
+    cx.strokeStyle = `rgba(${baseR - 20}, ${baseG - 12}, ${baseB - 8}, 0.3)`;
+    cx.lineWidth = 0.8;
+    for (let i = 0; i < 6; i++) {
+      const ly = -hh * 0.7 + (hh * 1.4) * (i / 5);
+      cx.beginPath();
+      cx.moveTo(-hw * 0.8 + Math.random() * 10, ly + (Math.random() - 0.5) * 2);
+      for (let t = 0; t < 1; t += 0.1) {
+        const lx = -hw * 0.8 + hw * 1.6 * t;
+        const lly = ly + Math.sin(t * 4 + i) * 1.5 + (Math.random() - 0.5) * 1;
+        cx.lineTo(lx, lly);
+      }
+      cx.stroke();
+    }
+    
+    const endX = hw - radius * 0.3;
+    cx.beginPath();
+    cx.ellipse(endX, 0, hh * 0.5, hh * 0.6, 0, 0, Math.PI * 2);
+    cx.strokeStyle = `rgba(${baseR + 20}, ${baseG + 10}, ${baseB + 5}, 0.25)`;
+    cx.lineWidth = 0.6;
+    cx.stroke();
+    cx.beginPath();
+    cx.ellipse(endX, 0, hh * 0.25, hh * 0.3, 0, 0, Math.PI * 2);
+    cx.stroke();
+    
+    const hlGrad = cx.createLinearGradient(-hw, -hh, -hw, -hh * 0.3);
+    hlGrad.addColorStop(0, `rgba(255, 180, 80, ${0.12 + brightness * 0.10})`);
+    hlGrad.addColorStop(1, 'rgba(255, 140, 50, 0)');
+    cx.beginPath();
+    cx.moveTo(-hw + radius, -hh);
+    cx.lineTo(hw - radius, -hh);
+    cx.arc(hw - radius, 0, hh, -Math.PI/2, -Math.PI/4);
+    cx.lineTo(-hw + radius, -hh * 0.7);
+    cx.closePath();
+    cx.fillStyle = hlGrad;
+    cx.fill();
+    
+    cx.beginPath();
+    cx.moveTo(-hw * 0.7, -hh + 0.5);
+    cx.lineTo(hw * 0.7, -hh + 0.5);
+    cx.strokeStyle = `rgba(255, 160, 60, ${0.08 + brightness * 0.08})`;
+    cx.lineWidth = 1.2;
+    cx.stroke();
+    
+    for (let i = 0; i < 3; i++) {
+      const ccx = gaussRandom(0, hw * 0.4);
+      const ccy = gaussRandom(-hh * 0.2, hh * 0.3);
+      const cr = 3 + Math.random() * 8;
+      cx.beginPath();
+      cx.ellipse(ccx, ccy, cr, cr * 0.5, Math.random(), 0, Math.PI * 2);
+      cx.fillStyle = `rgba(15, 8, 3, ${0.15 + Math.random() * 0.2})`;
+      cx.fill();
+      if (brightness > 0.3 && Math.random() < 0.6) {
+        cx.beginPath();
+        cx.ellipse(ccx, ccy, cr * 0.6, cr * 0.3, Math.random(), 0, Math.PI * 2);
+        cx.fillStyle = `rgba(255, 120, 30, ${0.04 + brightness * 0.04})`;
+        cx.fill();
+      }
+    }
+    
+    const egGrad = cx.createLinearGradient(-hw, -hh * 1.5, -hw, -hh);
+    egGrad.addColorStop(0, `rgba(255, 120, 30, ${0.03 + brightness * 0.04})`);
+    egGrad.addColorStop(1, 'rgba(255, 120, 30, 0)');
+    cx.fillStyle = egGrad;
+    cx.fillRect(-hw, -hh * 1.5, length, hh * 0.5);
+    
+    cx.restore();
+  }
+
+  function drawAllLogs(lc, w, h) {
+    const ccx = w * 0.5;
+    const ly = LOG_Y();
+    const scale = w / 1600;
+    
+    drawLog(lc, ccx - w * 0.08, ly + 12 * scale, 280 * scale, 28 * scale, -0.25, 0.3);
+    drawLog(lc, ccx + w * 0.07, ly + 10 * scale, 260 * scale, 26 * scale, 0.2, 0.35);
+    drawLog(lc, ccx - w * 0.01, ly + 18 * scale, 240 * scale, 32 * scale, 0.05, 0.25);
+    
+    const pulse = 0.85 + Math.sin(time * 0.025) * 0.1;
+    for (let i = 0; i < 8; i++) {
+      const ex = ccx + gaussRandom(0, w * 0.04);
+      const ey = ly + gaussRandom(12, 8) * scale;
+      const er = (3 + Math.random() * 6) * scale;
+      const ea = (0.12 + Math.sin(time * 0.06 + i * 2.1) * 0.06) * pulse;
+      lc.beginPath();
+      lc.arc(ex, ey, er, 0, Math.PI * 2);
+      const eg = lc.createRadialGradient(ex, ey, 0, ex, ey, er);
+      eg.addColorStop(0, `rgba(255, 180, 60, ${ea})`);
+      eg.addColorStop(0.6, `rgba(255, 100, 20, ${ea * 0.3})`);
+      eg.addColorStop(1, 'rgba(200, 60, 10, 0)');
+      lc.fillStyle = eg;
+      lc.fill();
+    }
+    
+    drawLog(lc, ccx - w * 0.06, ly + 28 * scale, 300 * scale, 30 * scale, 0.18, 0.5);
+    drawLog(lc, ccx + w * 0.05, ly + 30 * scale, 280 * scale, 27 * scale, -0.15, 0.45);
+    drawLog(lc, ccx - w * 0.02, ly + 8 * scale, 120 * scale, 12 * scale, 0.7, 0.6);
+    drawLog(lc, ccx + w * 0.03, ly + 5 * scale, 100 * scale, 10 * scale, -0.5, 0.55);
+  }
+
+  // ========================================================
+  // FLAMES
+  // ========================================================
+  class FlameTongue {
+    constructor(index) {
+      const spread = gaussRandom(0, 0.4);
+      this.baseXOffset = spread * 0.11;
+      this.phase = Math.random() * Math.PI * 2;
+      this.speed = 0.025 + Math.random() * 0.045;
+      this.swaySpeed = 0.012 + Math.random() * 0.028;
+      this.swayPhase = Math.random() * Math.PI * 2;
+      this.secondaryPhase = Math.random() * Math.PI * 2;
+      this.secondarySpeed = 0.04 + Math.random() * 0.06;
+      
+      const dist = Math.abs(spread);
+      if (dist < 0.12) this.layer = 'core';
+      else if (dist < 0.25) this.layer = 'mid';
+      else this.layer = 'outer';
+
+      if (this.layer === 'core') {
+        this.yOffset = 0.016 + Math.random() * 0.016;
+      } else if (this.layer === 'mid') {
+        this.yOffset = 0.014 + Math.random() * 0.018;
+      } else {
+        this.yOffset = 0.010 + Math.random() * 0.016;
+      }
+      
+      const sr = Math.random();
+      if (sr < 0.12) {
+        this.heightMult = 0.12 + Math.random() * 0.06;
+        this.widthMult = 0.026 + Math.random() * 0.016;
+      } else if (sr < 0.45) {
+        this.heightMult = 0.06 + Math.random() * 0.06;
+        this.widthMult = 0.020 + Math.random() * 0.014;
+      } else {
+        this.heightMult = 0.025 + Math.random() * 0.04;
+        this.widthMult = 0.012 + Math.random() * 0.012;
+      }
+    }
+    
+    draw(c, w, h, t) {
+      const fy = FIRE_Y();
+      const px = (0.5 + this.baseXOffset) * w;
+      const py = fy + this.yOffset * h + Math.sin(t * 0.03 + this.phase) * h * 0.005;
+      
+      const heightAnim = 0.6 + Math.sin(t * this.speed + this.phase) * 0.25 
+                        + Math.sin(t * this.secondarySpeed + this.secondaryPhase) * 0.15;
+      const sway = Math.sin(t * this.swaySpeed + this.swayPhase) * w * 0.016
+                 + Math.sin(t * this.swaySpeed * 1.7 + this.secondaryPhase) * w * 0.007;
+      const flameH = this.heightMult * h * heightAnim;
+      const flameW = this.widthMult * w;
+      
+      const tipX = px + sway;
+      const tipY = py - flameH;
+      
+      const wb1 = Math.sin(t * 0.037 + this.phase) * 0.5;
+      const wb2 = Math.sin(t * 0.043 + this.phase + 2) * 0.4;
+      
+      const baseSpreadL = flameW * (0.6 + Math.sin(t * 0.02 + this.phase * 2) * 0.2);
+      const baseSpreadR = flameW * (0.65 + Math.sin(t * 0.025 + this.phase * 3) * 0.2);
+      
+      c.beginPath();
+      c.moveTo(px - baseSpreadL, py);
+      c.bezierCurveTo(
+        px - flameW * (0.9 + wb1), py - flameH * 0.3,
+        tipX - flameW * (0.35 + wb2 * 0.2), py - flameH * 0.78,
+        tipX, tipY
+      );
+      c.bezierCurveTo(
+        tipX + flameW * (0.3 + wb1 * 0.15), py - flameH * 0.72,
+        px + flameW * (0.8 + wb2), py - flameH * 0.28,
+        px + baseSpreadR, py
+      );
+      c.closePath();
+      
+      let gradient;
+      if (this.layer === 'core') {
+        gradient = c.createLinearGradient(px, py, tipX, tipY);
+        gradient.addColorStop(0, 'rgba(255, 245, 210, 0.32)');
+        gradient.addColorStop(0.2, 'rgba(255, 225, 150, 0.25)');
+        gradient.addColorStop(0.5, 'rgba(255, 180, 60, 0.15)');
+        gradient.addColorStop(0.8, 'rgba(255, 140, 30, 0.06)');
+        gradient.addColorStop(1, 'rgba(255, 100, 10, 0.0)');
+      } else if (this.layer === 'mid') {
+        gradient = c.createLinearGradient(px, py, tipX, tipY);
+        gradient.addColorStop(0, 'rgba(255, 170, 50, 0.24)');
+        gradient.addColorStop(0.3, 'rgba(255, 120, 20, 0.17)');
+        gradient.addColorStop(0.6, 'rgba(230, 80, 10, 0.08)');
+        gradient.addColorStop(1, 'rgba(200, 50, 5, 0.0)');
+      } else {
+        gradient = c.createLinearGradient(px, py, tipX, tipY);
+        gradient.addColorStop(0, 'rgba(230, 90, 20, 0.16)');
+        gradient.addColorStop(0.4, 'rgba(190, 55, 10, 0.09)');
+        gradient.addColorStop(1, 'rgba(140, 30, 5, 0.0)');
+      }
+      
+      c.fillStyle = gradient;
+      c.fill();
+    }
+  }
+
+  const flames = [];
+  for (let i = 0; i < 40; i++) flames.push(new FlameTongue(i));
+  for (let i = 0; i < 15; i++) {
+    const f = new FlameTongue(40 + i);
+    f.heightMult = 0.015 + Math.random() * 0.03;
+    f.widthMult = 0.008 + Math.random() * 0.008;
+    f.yOffset = 0.020 + Math.random() * 0.018;
+    f.baseXOffset = gaussRandom(0, 0.3) * 0.1;
+    f.layer = Math.random() < 0.5 ? 'core' : 'mid';
+    flames.push(f);
+  }
+  flames.sort((a, b) => {
+    const order = { outer: 0, mid: 1, core: 2 };
+    return order[a.layer] - order[b.layer];
+  });
+
+  function drawFireBase(c, w, h, t) {
+    const ccx = w * 0.5;
+    const fy = FIRE_Y();
+    const pulse = 0.85 + Math.sin(t * 0.02) * 0.08 + Math.sin(t * 0.053) * 0.07;
+    
+    const g1 = c.createRadialGradient(ccx, fy + h * 0.01, 0, ccx, fy + h * 0.01, w * 0.24);
+    g1.addColorStop(0, `rgba(255, 160, 50, ${0.22 * pulse})`);
+    g1.addColorStop(0.3, `rgba(255, 100, 20, ${0.13 * pulse})`);
+    g1.addColorStop(0.6, `rgba(200, 60, 10, ${0.05 * pulse})`);
+    g1.addColorStop(1, 'rgba(150, 40, 5, 0)');
+    c.fillStyle = g1;
+    c.fillRect(0, fy - h * 0.12, w, h * 0.28);
+    
+    const g2 = c.createRadialGradient(ccx, fy + h * 0.005, 0, ccx, fy + h * 0.005, w * 0.07);
+    g2.addColorStop(0, `rgba(255, 235, 190, ${0.26 * pulse})`);
+    g2.addColorStop(0.4, `rgba(255, 190, 90, ${0.15 * pulse})`);
+    g2.addColorStop(1, 'rgba(255, 120, 30, 0)');
+    c.fillStyle = g2;
+    c.fillRect(ccx - w * 0.12, fy - h * 0.04, w * 0.24, h * 0.1);
+    
+    for (let i = 0; i < 14; i++) {
+      const ex = ccx + gaussRandom(0, w * 0.05);
+      const ey = fy + gaussRandom(h * 0.008, h * 0.012);
+      const er = 2 + Math.random() * 5;
+      const ea = (0.18 + Math.sin(t * 0.08 + i * 1.7) * 0.1) * pulse;
+      const eg = c.createRadialGradient(ex, ey, 0, ex, ey, er * 3.5);
+      eg.addColorStop(0, `rgba(255, 210, 110, ${ea})`);
+      eg.addColorStop(0.5, `rgba(255, 140, 40, ${ea * 0.35})`);
+      eg.addColorStop(1, 'rgba(200, 80, 10, 0)');
+      c.fillStyle = eg;
+      c.beginPath();
+      c.arc(ex, ey, er * 3.5, 0, Math.PI * 2);
+      c.fill();
+    }
+    
+    const logGlowSpots = [
+      { x: -0.02, y: 0.012 }, { x: 0.03, y: 0.010 }, { x: -0.04, y: 0.016 },
+      { x: 0.01, y: 0.018 }, { x: 0.05, y: 0.014 }, { x: -0.01, y: 0.020 }
+    ];
+    for (const spot of logGlowSpots) {
+      const sx = ccx + spot.x * w;
+      const sy = fy + spot.y * h;
+      const sr = w * 0.02;
+      const sa = (0.06 + Math.sin(t * 0.05 + spot.x * 20) * 0.03) * pulse;
+      const sg = c.createRadialGradient(sx, sy, 0, sx, sy, sr);
+      sg.addColorStop(0, `rgba(255, 160, 60, ${sa})`);
+      sg.addColorStop(1, 'rgba(255, 100, 20, 0)');
+      c.fillStyle = sg;
+      c.beginPath();
+      c.arc(sx, sy, sr, 0, Math.PI * 2);
+      c.fill();
+    }
+  }
+
+  // ========================================================
+  // SPARKS
+  // ========================================================
+  class Spark {
+    constructor() { this.reset(true); }
+    reset(initial) {
+      const fy = FIRE_Y();
+      const fx = W() * 0.5 + gaussRandom(0, W() * 0.025);
+      this.x = fx;
+      this.y = initial ? fy - Math.random() * H() * 0.55 : fy;
+      
+      const angle = gaussRandom(-Math.PI / 2, 0.5);
+      const speed = 0.3 + Math.random() * Math.random() * 2.0;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.windBias = gaussRandom(0.02, 0.07);
+      this.turbPhase = Math.random() * Math.PI * 2;
+      this.turbFreq = 0.02 + Math.random() * 0.04;
+      this.turbAmp = 0.05 + Math.random() * 0.3;
+      
+      const sr = Math.random();
+      this.size = sr < 0.6 ? 0.5 + Math.random() * 1.0
+               : sr < 0.9 ? 1.2 + Math.random() * 1.5
+               : 2.5 + Math.random() * 2.5;
+      
+      this.life = 1;
+      this.decay = this.size < 1.5 ? (0.004 + Math.random() * 0.008) : (0.001 + Math.random() * 0.003);
+      this.flickerSpeed = 0.05 + Math.random() * 0.15;
+      this.flickerPhase = Math.random() * Math.PI * 2;
+      this.flickerDepth = 0.2 + Math.random() * 0.5;
+      
+      const heat = Math.random();
+      if (heat < 0.2) { this.r = 255; this.g = 235 + Math.random() * 20; this.b = 190 + Math.random() * 50; }
+      else if (heat < 0.5) { this.r = 255; this.g = 130 + Math.random() * 70; this.b = 10 + Math.random() * 40; }
+      else if (heat < 0.8) { this.r = 235 + Math.random() * 20; this.g = 80 + Math.random() * 50; this.b = 10 + Math.random() * 20; }
+      else { this.r = 200 + Math.random() * 40; this.g = 50 + Math.random() * 40; this.b = 10 + Math.random() * 15; }
+      
+      this.birthFlash = Math.random() < 0.3 ? 1.0 : 0;
+      this.gravity = 0.0003 + Math.random() * 0.0005;
+      this.angle = Math.random() * Math.PI * 2;
+      this.rotSpeed = (Math.random() - 0.5) * 0.08;
+      this.elongation = this.size < 2 ? 1 + Math.random() * 2.5 : 1 + Math.random() * 0.5;
+    }
+    update() {
+      this.turbPhase += this.turbFreq;
+      const turbX = Math.sin(this.turbPhase) * this.turbAmp;
+      const turbY = Math.sin(this.turbPhase * 0.7 + 1.3) * this.turbAmp * 0.3;
+      this.vx += this.windBias * 0.01 + turbX * 0.01;
+      this.vy += this.gravity;
+      this.x += this.vx + turbX;
+      this.y += this.vy + turbY;
+      this.vx *= 0.998;
+      this.vy *= 0.999;
+      this.life -= this.decay;
+      this.birthFlash *= 0.92;
+      this.angle += this.rotSpeed;
+      const drift = Math.abs(this.x - W() * 0.5) / (W() * 0.5);
+      if (drift > 0.4) this.life -= this.decay * 1.5;
+      if (this.life <= 0 || this.y < -20 || this.x < -50 || this.x > W() + 50) this.reset(false);
+    }
+    draw() {
+      const flicker = 1 - Math.sin(this.flickerPhase += this.flickerSpeed) * this.flickerDepth * (1 - this.life * 0.5);
+      const alpha = Math.max(0, this.life * 0.7 * flicker + this.birthFlash * 0.3);
+      if (alpha < 0.01) return;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, this.size * 0.5, this.size * 0.5 * this.elongation, 0, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${alpha})`;
+      ctx.fill();
+      const gs = this.size * (2.5 + this.birthFlash * 3);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, gs, gs * (this.elongation * 0.5 + 0.5), 0, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.r}, ${Math.min(255, this.g + 30)}, ${this.b}, ${alpha * 0.12})`;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // ========================================================
+  // GRAPH NODES
+  // ========================================================
+  class GraphNode {
+    constructor() {
+      this.x = W() * 0.08 + Math.random() * W() * 0.84;
+      this.y = H() * 0.04 + Math.random() * H() * 0.28;
+      this.size = 1.5 + Math.random() * 3.5;
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = 0.008 + Math.random() * 0.015;
+      this.baseAlpha = 0.18 + Math.random() * 0.28;
+      const t = Math.random();
+      if (t < 0.4) { this.r = 225; this.g = 205; this.b = 160; }
+      else if (t < 0.7) { this.r = 200; this.g = 210; this.b = 225; }
+      else { this.r = 240; this.g = 220; this.b = 175; }
+    }
+    update() { this.pulse += this.pulseSpeed; }
+    draw() {
+      const a = this.baseAlpha + Math.sin(this.pulse) * 0.07;
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${a})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${a * 0.4})`; ctx.lineWidth = 0.7; ctx.stroke();
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${a * 0.05})`; ctx.fill();
+    }
+  }
+
+  class TransitionParticle {
+    constructor() { this.reset(true); }
+    reset(initial) {
+      this.x = W() * 0.2 + gaussRandom(W() * 0.3, W() * 0.12);
+      this.y = initial ? H() * 0.28 + Math.random() * H() * 0.20 : H() * 0.52;
+      this.vx = gaussRandom(0, 0.12);
+      this.vy = -(0.06 + Math.random() * 0.18);
+      this.size = 1 + Math.random() * 2;
+      this.life = 1;
+      this.decay = 0.0012 + Math.random() * 0.001;
+      this.wobble = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.wobble += 0.012;
+      this.x += this.vx + Math.sin(this.wobble) * 0.08;
+      this.y += this.vy; this.life -= this.decay; this.vy *= 0.9985;
+      if (this.life <= 0 || this.y < H() * 0.04) this.reset(false);
+    }
+    draw() {
+      const hr = Math.max(0, Math.min(1, 1 - (this.y / (H() * 0.50))));
+      const r = Math.floor(255 - hr * 55), g = Math.floor(140 + hr * 65), b = Math.floor(30 + hr * 140);
+      const a = this.life * 0.35;
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`; ctx.fill();
+      if (hr > 0.4) {
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${(hr - 0.4) * a * 0.5})`; ctx.lineWidth = 0.4; ctx.stroke();
+      }
+    }
+  }
+
+  const maxSparks = 130;
+  const sparks = Array.from({length: 90}, () => new Spark());
+  const nodes = Array.from({length: 28}, () => new GraphNode());
+  const transitions = Array.from({length: 25}, () => new TransitionParticle());
+
+  let burstTimer = 0, nextBurst = 60 + Math.random() * 180;
+
+  function burstSparks() {
+    const count = 3 + Math.floor(Math.random() * 8);
+    const bx = W() * 0.5 + gaussRandom(0, W() * 0.02);
+    const ba = gaussRandom(-Math.PI / 2, 0.3);
+    for (let i = 0; i < count && sparks.length < maxSparks; i++) {
+      const s = new Spark();
+      s.x = bx + gaussRandom(0, 5);
+      s.y = FIRE_Y();
+      const spread = gaussRandom(ba, 0.2);
+      const speed = 0.8 + Math.random() * 1.5;
+      s.vx = Math.cos(spread) * speed;
+      s.vy = Math.sin(spread) * speed;
+      s.birthFlash = 0.8;
+      s.size = 0.8 + Math.random() * 2;
+      sparks.push(s);
+    }
+  }
+
+  function drawEdges() {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = W() * 0.2;
+        if (dist < maxDist) {
+          const a = (1 - dist / maxDist) * 0.09;
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(215, 200, 170, ${a})`; ctx.lineWidth = 0.6; ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawHeatColumn() {
+    const ccx = W() * 0.5;
+    const fy = FIRE_Y();
+    const grad = ctx.createLinearGradient(ccx, fy, ccx, H() * 0.45);
+    grad.addColorStop(0, 'rgba(255, 120, 30, 0.025)');
+    grad.addColorStop(0.3, 'rgba(255, 100, 20, 0.012)');
+    grad.addColorStop(0.7, 'rgba(200, 80, 30, 0.004)');
+    grad.addColorStop(1, 'rgba(200, 80, 30, 0)');
+    ctx.beginPath();
+    ctx.moveTo(ccx - W() * 0.07, fy);
+    ctx.quadraticCurveTo(ccx - W() * 0.10, H() * 0.65, ccx - W() * 0.13, H() * 0.45);
+    ctx.lineTo(ccx + W() * 0.11, H() * 0.45);
+    ctx.quadraticCurveTo(ccx + W() * 0.08, H() * 0.65, ccx + W() * 0.05, fy);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+
+  // ========================================================
+  // MAIN LOOP
+  // ========================================================
+  function animate() {
+    time++;
+    const w = W(), h = H();
+    
+    if (time % 3 === 0) {
+      logsCtx.clearRect(0, 0, w, h);
+      drawAllLogs(logsCtx, w, h);
+    }
+    
+    ctx.clearRect(0, 0, w, h);
+    drawFireBase(ctx, w, h, time);
+    flames.forEach(f => f.draw(ctx, w, h, time));
+    drawHeatColumn();
+    drawEdges();
+    nodes.forEach(n => { n.update(); n.draw(); });
+    transitions.forEach(t => { t.update(); t.draw(); });
+    sparks.forEach(s => { s.update(); s.draw(); });
+    
+    burstTimer++;
+    if (burstTimer >= nextBurst) {
+      burstSparks();
+      burstTimer = 0;
+      nextBurst = 80 + Math.random() * 250;
+    }
+    while (sparks.length > maxSparks) sparks.shift();
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
+
+</body>
+</html>
